@@ -1,0 +1,4 @@
+---
+- name: Disable SELinux
+  shell: "setenforce 0"
+  ignore_errors: yes

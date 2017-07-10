@@ -1,0 +1,15 @@
+---
+- name: Copy nginx installer
+  copy:
+    src: "{{ nginx.rpm }}"
+    dest: "/tmp/{{ nginx.rpm }}"
+    owner: "{{ nginx.user }}"
+    group: "{{ nginx.group }}"
+    mode: "0644"
+    force: yes
+
+- name: Install nginx from a local rpm file 
+  yum:
+    name: "/tmp/{{ nginx.rpm }}"
+    state: present
+

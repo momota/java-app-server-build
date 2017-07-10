@@ -1,0 +1,15 @@
+---
+- name: Copy Java installer
+  copy:
+    src: "{{ java.rpm }}"
+    dest: "/tmp/{{ java.rpm }}"
+    owner: "{{ java.user }}"
+    group: "{{ java.group }}"
+    mode: "0644"
+    force: yes
+
+- name: Install Java from a local rpm file 
+  yum:
+    name: "/tmp/{{ java.rpm }}"
+    state: present
+
