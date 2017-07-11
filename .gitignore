@@ -16,6 +16,7 @@ Session.vim
 *.aux
 *.elc
 *.rpm
+*.zip
 .zshrc.local
 samples
 

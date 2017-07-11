@@ -1,0 +1,39 @@
+---
+- name: Copy OpenCV installers
+  copy:
+    src: "{{ item }}"
+    dest: "/tmp/{{ item | basename }}"
+    mode: "0644"
+    force: yes
+  with_fileglob: files/*.zip
+
+- name: Extract from Zip files
+  unarchive:
+    src: "/tmp/{{ item | basename }}"
+    dest: "/tmp/"
+    remote_src: True
+  with_fileglob: files/*.zip
+
+#- name: Create build directory
+#  file:
+#    name: "/tmp/build_opencv"
+#    state: directory
+
+- name: Make the OpenCV build artifacts
+  shell: cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D INSTALL_PYTHON_EXAMPLES=ON -D PLANTUML_JAR=/usr/share/java/plantuml.jar -D ENABLE_NEON=ON -D WITH-TBB=OFF -D BUILD_TBB=OFF -D WITH_QT=ON -D WITH_OPENGL=OFF -D OPENCV_EXTRA_MODULES_PATH=/tmp/opencv_contrib-3.2.0/modules -D BUILD_opencv_freetype=OFF -D BUILD_EXAMPLES=OFF -D INSTALL_C_EXAMPLES=OFF .
+  args:
+    chdir: /tmp/opencv-3.2.0
+
+- name: Build opencv
+  make:
+    chdir: /tmp/opencv-3.2.0
+#    params:
+#      NUM_THREADS: 4
+
+- name: Install opencv
+  make:
+    chdir: /tmp/opencv-3.2.0
+    target: install
+  become: yes
+
+
