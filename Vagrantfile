@@ -18,8 +18,8 @@ Vagrant.configure("2") do |config|
   (1..N).each do |machine_id|
     config.vm.define "ap0#{machine_id}" do |machine|
       machine.vm.box      = "centos66_64"
-      machine.vm.network :private_network, ip: "10.1.1.#{machine_id}", virtualbox__intnet: "my_network"
-      # machine.vm.network :public_network,  ip: "10.1.1.#{machine_id}", bridge: "enp0s26u1u2u1"
+      # machine.vm.network :private_network, ip: "10.1.1.#{machine_id}", virtualbox__intnet: "my_network"
+      machine.vm.network :public_network,  ip: "10.1.1.#{machine_id}", bridge: "enp0s26u1u2"
       machine.vm.hostname = "ap0#{machine_id}"
 
       machine.vm.provider "virtualbox" do |p|

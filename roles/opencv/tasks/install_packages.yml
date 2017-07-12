@@ -1,5 +1,5 @@
 ---
-- name: Copy installer which installation of OpenCV requires
+- name: Copy DevTools installer
   copy:
     src: "{{ item }}"
     dest: "/tmp/{{ item | basename }}"
@@ -7,7 +7,7 @@
     force: yes
   with_fileglob: rpms_development_tools/*.rpm
 
-- name: Install packages from a local rpm file 
+- name: Install DevTools from a local rpm file 
   yum:
     name: "/tmp/{{ item | basename }}"
     state: present
